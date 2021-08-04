@@ -2,9 +2,16 @@ const express = require('express');
 const route=express.Router();
 const productService = require('../services/productService');
 const productSchema = require('../helper/schema/product')
-const validate = require('../helper/requestValidator')
- 
+const validate = require('../helper/requestValidator');
+const { accessSync } = require('fs');
+
+
 const product = new productService();
+
+
+route.get('/sample',async(req,res)=>{
+    res.render('pre');
+})
 
 route.get("/",async(req,res)=>{
     product.getAllProducts(req,res);
@@ -25,5 +32,7 @@ route.delete("/:id",async(req,res)=>{
 route.patch('/:id',validate({body:productSchema}),async(req,res)=>{
     product.updateProduct(req,res);
 })
+
+
 
 module.exports=route;
